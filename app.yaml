@@ -1,0 +1,23 @@
+runtime: custom
+env: flex
+service: jfantom
+
+network:
+    forwarded_ports: 
+        - 8000/tcp
+
+resources:
+    cpu: 4
+    memory_gb: 25.6
+    disk_size_gb: 100
+
+automatic_scaling:
+    min_num_instances: 1
+    max_num_instances: 1
+
+health_check:
+    enable_health_check: True
+    check_interval_sec: 10
+    timeout_sec: 5
+    unhealthy_threshold: 5
+    healthy_threshold: 2

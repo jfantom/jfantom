@@ -1,0 +1,17 @@
+steps:
+    # Decrypt the client secrets key.  See:
+    # https://cloud.google.com/container-builder/docs/how-to/using-encrypted-resources
+    - name: gcr.io/cloud-builders/gcloud
+      args:
+          - kms
+          - decrypt
+          - --ciphertext-file=secrets/client_secret_etsy-dataeng-hadoop-sandbox.json.enc
+          - --plaintext-file=secrets/client_secret.json
+          - --location=global
+          - --keyring=container-builder
+          - --key=oauth-client-secrets-key
+            
+    - name: 'gcr.io/cloud-builders/docker'
+      args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/jfantom', '.' ]
+images:
+    - 'gcr.io/$PROJECT_ID/jfantom'
